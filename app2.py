@@ -221,10 +221,21 @@ def weather():
 @app.route('/showwardrobe')	
 def show_images():
 	if request.args['message']=='summer':
-		return render_template('summer.html',data=map(json.dumps, summerWardrobe))
+		if len(summerWardrobe)!=0:
+			s=''
+			for i in summerWardrobe:
+				s= s+'<img src="uploads/'+i+'"/> <br/>'
+			return s
+		else:
+			return ('No summer cloths in wardrobe')
 	else:
-		return render_template('winter.html',data=map(json.dumps, winterWardrobe))
-	
+		if len(winterWardrobe)!=0:
+			s= ''
+			for i in winterWardrobe:
+				s= s+'<img src="uploads/'+i+'"/> <br/>'
+			return s
+		else:
+			return ('No winter cloths in wardrobe')
 if __name__ == '__main__':
     app.run(
         
