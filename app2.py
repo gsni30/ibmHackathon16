@@ -224,7 +224,7 @@ def show_images():
 		if len(summerWardrobe)!=0:
 			s=''
 			for i in summerWardrobe:
-				s= s+'<img src="uploads/'+i+'"/> <br/>'
+				s= s+'<img src="/uploads/'+i+'"/> <br/>'
 			return s
 		else:
 			return ('No summer cloths in wardrobe')
@@ -232,7 +232,7 @@ def show_images():
 		if len(winterWardrobe)!=0:
 			s= ''
 			for i in winterWardrobe:
-				s= s+'<img src="uploads/'+i+'"/> <br/>'
+				s= s+'<img src="/uploads/'+i+'"/> <br/>'
 			return s
 		else:
 			return ('No winter cloths in wardrobe')
