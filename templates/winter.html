@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+          rel="stylesheet">
+	<script type="text/javascript">
+		window.onload= "test_func()";
+    function test_func(data) {
+        console.log(data);
+    }
+    test_func({{ data|safe }})
+	</script>
+  </head>
+  <body>
+    <div class="container">
+      {% for item in data %}
+    <span onclick=someFunction({{ item|safe }});>{{ item }}</span>
+{% endfor %}
+    </div>
+  </body>
+</html>
