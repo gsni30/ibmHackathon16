@@ -60,11 +60,72 @@ def upload():
 		file2.save(os.path.join(app.config['UPLOAD_FOLDER'], filename2))
 		file3.save(os.path.join(app.config['UPLOAD_FOLDER'], filename3))
 		file4.save(os.path.join(app.config['UPLOAD_FOLDER'], filename4))
-		filenames= [filename1]#, filename2, filename3, filename4]
+		filenames= [filename1, filename2, filename3, filename4]
         # Redirect the user to the uploaded_file route, which
         # will basicaly show on the browser the uploaded file
-		return redirect(url_for('uploaded_file', filename1=filename1, filename2= filename2, filename3= filename3, filename4= filename4))
-
+		visual_recognition = VisualRecognitionV3('2016-05-20', api_key='f11faf136164665418a93df1b6037bc4e5c4cc7e')
+	# with open("/uploads/"+str(filename)) as image_file:
+	# print (json.dumps(visual_recognition.classify(images_file="/uploads/"+str(filename), threshold=0, classifier_ids=['Summer_Winter_1816597639']), indent=2))
+	# return send_from_directory(app.config['UPLOAD_FOLDER'],
+    
+		with open(join(dirname(__file__), '/uploads/'+str(filename1)), 'rb') as image_file:
+			f1= visual_recognition.classify(images_file=image_file, threshold=0, classifier_ids=['Summer_Winter_1816597639'])
+			print json.dumps(f1,indent=2)
+			x0=f1['images']
+			x1= x0[0]
+			x2= x1['classifiers']
+			x3= x2[0]
+			x4= x3['classes']
+			x5= x4[0]
+			score= x5['score']
+			if score>0.5:
+				summerWardrobe.append(str(filename1))
+			else:
+				winterWardrobe.append(str(filename1))
+		
+		with open(join(dirname(__file__), '/uploads/'+str(filename2)), 'rb') as image_file:
+			f2= visual_recognition.classify(images_file=image_file, threshold=0, classifier_ids=['Summer_Winter_1816597639'])
+			x0=f2['images']
+			x1= x0[0]
+			x2= x1['classifiers']
+			x3= x2[0]
+			x4= x3['classes']
+			x5= x4[0]
+			score= x5['score']
+			if score>0.5:
+				summerWardrobe.append(str(filename2))
+			else:
+				winterWardrobe.append(str(filename2))
+		
+		with open(join(dirname(__file__), '/uploads/'+str(filename3)), 'rb') as image_file:
+			f3= visual_recognition.classify(images_file=image_file, threshold=0, classifier_ids=['Summer_Winter_1816597639'])
+			x0=f3['images']
+			x1= x0[0]
+			x2= x1['classifiers']
+			x3= x2[0]
+			x4= x3['classes']
+			x5= x4[0]
+			score= x5['score']
+			if score>0.5:
+				summerWardrobe.append(str(filename3))
+			else:
+				winterWardrobe.append(str(filename3))
+	
+		with open(join(dirname(__file__), '/uploads/'+str(filename4)), 'rb') as image_file:
+			f4= visual_recognition.classify(images_file=image_file, threshold=0, classifier_ids=['Summer_Winter_1816597639'])
+			x0=f4['images']
+			x1= x0[0]
+			x2= x1['classifiers']
+			x3= x2[0]
+			x4= x3['classes']
+			x5= x4[0]
+			score= x5['score']
+			if score>0.5:
+				summerWardrobe.append(str(filename4))
+			else:
+				winterWardrobe.append(str(filename4))
+			# return redirect(url_for('uploaded_file', filename1=filename1, filename2= filename2, filename3= filename3, filename4= filename4))
+		return render_template('city.html')	
 # This route is expecting a parameter containing the name
 # of a file. Then it will locate that file on the upload
 # directory and show it on the browser, so if the user uploads
@@ -135,6 +196,7 @@ def uploaded_file(filename1,filename2, filename3, filename4):
 		else:
 			winterWardrobe.append(str(filename4))
 			
+	
 	
 @app.route('/take_city', methods=['POST'])
 def weather():
